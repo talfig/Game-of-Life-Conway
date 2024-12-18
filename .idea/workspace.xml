@@ -7,7 +7,6 @@
     <list default="true" id="4d4fd4e1-c63d-4798-9af3-229e980b79c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rplife/genetic_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/rplife/genetic_algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rplife/patterns.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rplife/patterns.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
