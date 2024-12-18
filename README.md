@@ -41,9 +41,6 @@ A simple `tkinter` GUI displays the simulation in real time. The `GuiSimulation`
 
 To run the genetic algorithm and find a Methuselah pattern, you can execute the `genetic_algorithm.py` script:
 
-bash
-Copy code
-
 ```bash
 python rplife/genetic_algorithm.py
 ```
