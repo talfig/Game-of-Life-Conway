@@ -24,11 +24,6 @@ class Simulation:
             self.life.evolve()
             self.update_size()
 
-    def get_spoiler_text(self):
-        line1 = "Simulation ended at gen {} and {}\n".format(self.gen, "stabilized" if self.stabilized() else "did not stabilized")
-        line2 = "Max size will be {}, size will peak at gen {}".format(self.max_size, self.max_size_gen)
-        return line1 + line2
-
     def stabilized(self):
         return self.life.pattern in self.gen_history
 

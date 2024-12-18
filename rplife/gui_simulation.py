@@ -7,7 +7,7 @@ from rplife.pattern import load_from_toml
 
 
 class GuiSimulation:
-    def __init__(self, life: LifeGrid, cell_size=10, refresh_rate=50, spoiler_text=None):
+    def __init__(self, life: LifeGrid, cell_size=10, refresh_rate=50):
         self.start_button = None
         self.stop_button = None
         self.life = copy.deepcopy(life)
@@ -15,7 +15,6 @@ class GuiSimulation:
         self.cols = life.end_col
         self.cell_size = cell_size
         self.refresh_rate = refresh_rate
-        self.spoiler_text = spoiler_text
 
         self.alive_color = 'black'
         self.dead_color = 'white'
@@ -34,10 +33,6 @@ class GuiSimulation:
         # Create the labels for Generation and Alive Cells
         self.label = tk.Label(self.top_frame, text=self.get_label_text(), font="bold")
         self.label.pack(anchor='center', pady=5)
-
-        if self.spoiler_text:
-            self.sub_label = tk.Label(self.top_frame, text=self.spoiler_text)
-            self.sub_label.pack(anchor='center')
 
         # Create the canvas after initializing the frame
         self.canvas = tk.Canvas(self.root, width=self.cols * self.cell_size, height=self.rows * self.cell_size, bg='white')
@@ -124,7 +119,7 @@ class GuiSimulation:
 
 if __name__ == "__main__":
     # Example list of alive cells
-    alive_cells = load_from_toml(pattern_name="8:118")
+    alive_cells = load_from_toml(pattern_name="10:114")
 
     # Convert the alive cells to a set of tuples
     alive_cells_set = set(tuple(cell) for cell in alive_cells)
