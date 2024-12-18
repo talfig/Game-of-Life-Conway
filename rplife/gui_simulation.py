@@ -3,6 +3,7 @@
 import copy
 import tkinter as tk
 from grid import LifeGrid
+from rplife.pattern import load_from_toml
 
 
 class GuiSimulation:
@@ -108,7 +109,7 @@ class GuiSimulation:
     def stop_simulation(self):
         self.running = False
 
-    def move_to_next_gen(self, *args):
+    def move_to_next_gen(self):
         if self.running:
             self.gen += 1
             self.life.evolve()
@@ -123,10 +124,7 @@ class GuiSimulation:
 
 if __name__ == "__main__":
     # Example list of alive cells
-    alive_cells = [
-        [5, 10], [5, 11], [7, 7], [4, 8],
-        [5, 8], [11, 13], [5, 9], [17, 3]
-    ]
+    alive_cells = load_from_toml(pattern_name="8:118")
 
     # Convert the alive cells to a set of tuples
     alive_cells_set = set(tuple(cell) for cell in alive_cells)

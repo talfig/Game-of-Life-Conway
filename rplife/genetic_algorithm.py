@@ -9,7 +9,7 @@ from rplife.pattern import save_to_toml
 
 
 class GeneticAlgorithm:
-    def __init__(self, pop_size=100, grid_size=20, min_cells=5, max_cells=20, gen_limit=200,
+    def __init__(self, pop_size=100, grid_size=20, min_cells=5, max_cells=10, gen_limit=200,
                  crossover_prob=0.8, mutation_prob=0.8, threshold_fit=100):
         """
         Initializes the Genetic Algorithm.
@@ -236,7 +236,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=200, grid_size=20, gen_limit=200, threshold_fit=120)
+    ga = GeneticAlgorithm(pop_size=200, grid_size=20, gen_limit=300, threshold_fit=100)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
