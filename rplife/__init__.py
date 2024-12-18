@@ -1,3 +1,7 @@
 # rplife/__init__.py
 
-__version__ = "1.0.0"
+from rplife.genetic_algorithm import *
+from grid import *
+from gui_simulation import *
+from pattern import *
+from simulation import *

@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4d4fd4e1-c63d-4798-9af3-229e980b79c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rplife/genetic_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/rplife/genetic_algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rplife/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/rplife/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rplife/views.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +53,7 @@
       <recent name="C:\Users\xbpow\Downloads\Game-of-Life-Conway" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.genetic_algorithm">
+  <component name="RunManager" selected="Python.gui_simulation">
     <configuration name="genetic_algorithm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Game-of-Life-Conway" />
       <option name="ENV_FILES" value="" />
@@ -121,8 +122,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.genetic_algorithm" />
         <item itemvalue="Python.gui_simulation" />
+        <item itemvalue="Python.genetic_algorithm" />
         <item itemvalue="Python.simulation" />
       </list>
     </recent_temporary>
