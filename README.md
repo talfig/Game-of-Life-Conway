@@ -29,7 +29,7 @@ A simple `tkinter` GUI displays the simulation in real time. The `GuiSimulation`
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/life-grid-genetic-algorithm.git
+   git clone https://github.com/your-username/game-of-life-conway.git
    ```
 
 2. Install dependencies:
