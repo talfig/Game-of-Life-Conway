@@ -10,7 +10,7 @@ from rplife.pattern import save_to_toml
 
 class GeneticAlgorithm:
     def __init__(self, pop_size=100, grid_size=20, min_cells=5, max_cells=10, gen_limit=200,
-                 crossover_prob=0.8, mutation_prob=0.8, threshold_fit=100):
+                 crossover_prob=0.8, mutation_prob=0.8, mutation_count=3, threshold_fit=100):
         """
         Initializes the Genetic Algorithm.
 
@@ -31,6 +31,7 @@ class GeneticAlgorithm:
         self.gen_limit = gen_limit
         self.crossover_prob = crossover_prob
         self.mutation_prob = mutation_prob
+        self.mutation_count = mutation_count
         self.threshold_fit = threshold_fit  # Threshold fitness for Methuselah
         self.population = []
         self.pop_fit = 0  # Total fitness of the population
@@ -173,26 +174,27 @@ class GeneticAlgorithm:
 
         return child1, child2
 
-    def mutation(self, individual: LifeGrid):
-        # Perform mutation only if random < mutation_prob
-        if random.random() < self.mutation_prob:
-            new_pattern = set(individual.pattern)
+    def mutation(self, individual):
+        for _ in range(self.mutation_count):
+            if random.random() < self.mutation_prob:
+                new_pattern = set(individual.pattern)
 
-            # Decide to add or remove a cell
-            if random.random() < 0.5 and new_pattern:  # Remove an existing cell
-                new_pattern.remove(random.choice(list(new_pattern)))
-            else:  # Add a new cell within grid bounds
-                new_cell = (random.randint(0, self.grid_size - 1), random.randint(0, self.grid_size - 1))
-                if len(new_pattern) < self.max_cells:
-                    new_pattern.add(new_cell)
+                # Decide to add or remove a cell
+                if random.random() < 0.5 and new_pattern:  # Remove an existing cell
+                    new_pattern.remove(random.choice(list(new_pattern)))
+                else:  # Add a new cell within grid bounds
+                    new_cell = (random.randint(0, self.grid_size - 1), random.randint(0, self.grid_size - 1))
+                    if len(new_pattern) < self.max_cells:
+                        new_pattern.add(new_cell)
 
-            # Ensure the pattern respects the max_cells constraint
-            if len(new_pattern) > self.max_cells:
-                new_pattern = set(list(new_pattern)[:self.max_cells])
+                # Ensure the pattern respects the max_cells constraint
+                if len(new_pattern) > self.max_cells:
+                    new_pattern = set(list(new_pattern)[:self.max_cells])
 
-            return LifeGrid(new_pattern, self.grid_size)
+                # Update the individual with the new mutated pattern
+                individual = LifeGrid(new_pattern, self.grid_size)
 
-        # Return the original individual if no mutation occurs
+        # Return the final mutated individual
         return individual
 
     def next_generation(self):
@@ -236,7 +238,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=200, grid_size=20, gen_limit=300, threshold_fit=100)
+    ga = GeneticAlgorithm(pop_size=200, grid_size=20, gen_limit=500, threshold_fit=120)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
