@@ -119,7 +119,7 @@ class GuiSimulation:
 
 if __name__ == "__main__":
     # Example list of alive cells
-    alive_cells = load_from_toml(pattern_name="10:114")
+    alive_cells = load_from_toml(pattern_name="8:118")
 
     # Convert the alive cells to a set of tuples
     alive_cells_set = set(tuple(cell) for cell in alive_cells)

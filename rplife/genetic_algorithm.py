@@ -151,35 +151,58 @@ class GeneticAlgorithm:
         return selected
 
     def crossover(self, parent1: LifeGrid, parent2: LifeGrid):
-        # Check if crossover should occur based on probability
+        """
+        Perform uniform crossover between two parent individuals to create two offspring.
+
+        Args:
+            parent1 (LifeGrid): The first parent individual.
+            parent2 (LifeGrid): The second parent individual.
+
+        Returns:
+            tuple: Two LifeGrid objects representing the offspring.
+        """
+        # Check if crossover should occur based on the specified probability
         if random.random() > self.crossover_prob:
             return parent1, parent2
 
-        # Perform uniform crossover
+        # Initialize patterns for the offspring
         child1_pattern = set()
         child2_pattern = set()
-        all_positions = parent1.pattern | parent2.pattern  # Combine all positions from both parents
+
+        # Combine all unique positions from both parents
+        all_positions = parent1.pattern | parent2.pattern
 
         for position in all_positions:
-            if random.random() < 0.5:  # Randomly assign positions to child1 or child2
+            # Randomly assign positions to either child1 or child2
+            if random.random() < 0.5:
                 if len(child1_pattern) < self.max_cells:
                     child1_pattern.add(position)
             else:
                 if len(child2_pattern) < self.max_cells:
                     child2_pattern.add(position)
 
-        # Create new LifeGrid objects for the children
+        # Create new LifeGrid objects for the offspring
         child1 = LifeGrid(child1_pattern, self.grid_size)
         child2 = LifeGrid(child2_pattern, self.grid_size)
 
         return child1, child2
 
     def mutation(self, individual):
+        """
+        Apply mutation to an individual by adding or removing cells in its pattern.
+
+        Args:
+            individual (LifeGrid): The individual to mutate.
+
+        Returns:
+            LifeGrid: The mutated individual.
+        """
         for _ in range(self.mutation_count):
             if random.random() < self.mutation_prob:
+                # Create a copy of the individual's pattern
                 new_pattern = set(individual.pattern)
 
-                # Decide to add or remove a cell
+                # Decide whether to add or remove a cell
                 if random.random() < 0.5 and new_pattern:  # Remove an existing cell
                     new_pattern.remove(random.choice(list(new_pattern)))
                 else:  # Add a new cell within grid bounds
@@ -194,40 +217,51 @@ class GeneticAlgorithm:
                 # Update the individual with the new mutated pattern
                 individual = LifeGrid(new_pattern, self.grid_size)
 
-        # Return the final mutated individual
         return individual
 
     def next_generation(self):
-        # Sort the population based on fitness
+        """
+        Generate the next generation of the population using elitism, crossover, and mutation.
+
+        Steps:
+            1. Sort the population by fitness.
+            2. Retain the top 10% of individuals as the elite group.
+            3. Split the elite group into top and bottom halves.
+            4. Fill the next generation by combining crossover and mutation.
+
+        Updates:
+            self.population: Replaces the current population with the new generation.
+        """
+        # Sort the population by fitness in descending order
         sorted_population = sorted(self.population, key=lambda ind: self.get_fitness(ind), reverse=True)
 
-        # Calculate the size of the elite group (top 10% of population)
-        elite_size = max(1, int(0.1 * len(self.population)))  # Ensure at least 1 elite individual
+        # Determine the size of the elite group (top 10%)
+        elite_size = max(1, int(0.1 * len(self.population)))  # Ensure at least one elite individual
         elite_group = sorted_population[:elite_size]
 
         # Split the elite group into the top 50% and bottom 50%
-        top_elite_size = elite_size // 2  # Top 50% of elite
+        top_elite_size = elite_size // 2
         top_elite = elite_group[:top_elite_size]
         bottom_elite = elite_group[top_elite_size:]
 
-        # Initialize the next generation with the top 50% of elite individuals
+        # Initialize the next generation with the top elite individuals
         next_gen = deepcopy(top_elite)
 
-        # Crossover bottom 50% of elite with remaining individuals
+        # Perform crossover and mutation to fill the rest with the population
         non_elite_population = sorted_population[elite_size:]
-        while len(next_gen) < len(self.population):  # Maintain population size
-            # Randomly select a bottom elite and a non-elite individual for crossover
+        while len(next_gen) < len(self.population):
+            # Randomly select parents for crossover
             parent1 = random.choice(bottom_elite)
             parent2 = random.choice(non_elite_population)
 
-            # Perform crossover to generate children
+            # Generate offspring through crossover
             child1, child2 = self.crossover(parent1, parent2)
 
-            # Perform mutation on children
+            # Apply mutation to the offspring
             child1 = self.mutation(child1)
             child2 = self.mutation(child2)
 
-            # Add children to the next generation (ensure population size isn't exceeded)
+            # Add the offspring to the next generation, maintaining population size
             next_gen.append(child1)
             if len(next_gen) < len(self.population):
                 next_gen.append(child2)
@@ -238,7 +272,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=200, grid_size=20, gen_limit=500, threshold_fit=110)
+    ga = GeneticAlgorithm(pop_size=100, grid_size=20, gen_limit=500, threshold_fit=110)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
