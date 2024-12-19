@@ -1,7 +1,7 @@
 # rplife/simulation.py
 
 import copy
-from grid import LifeGrid
+from rplife.grid import LifeGrid
 
 
 class Simulation:

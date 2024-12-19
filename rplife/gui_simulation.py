@@ -2,7 +2,7 @@
 
 import copy
 import tkinter as tk
-from grid import LifeGrid
+from rplife.grid import LifeGrid
 from rplife.pattern import load_from_toml
 
 
