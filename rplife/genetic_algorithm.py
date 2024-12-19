@@ -291,7 +291,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=100, grid_size=20, gen_limit=500, threshold_fit=100)
+    ga = GeneticAlgorithm(pop_size=50, grid_size=20, gen_limit=500, threshold_fit=60)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
