@@ -9,7 +9,17 @@ from rplife.pattern import save_to_toml
 
 
 class GeneticAlgorithm:
-    def __init__(self, pop_size=100, grid_size=20, min_cells=5, max_cells=10, gen_limit=200,
+    """
+    Class for implementing a Genetic Algorithm to find a "Methuselah" pattern
+    in Conway's Game of Life.
+
+    This algorithm evolves a population of LifeGrids (chromosomes) through
+    selection, crossover, and mutation operations. It attempts to find a
+    "Methuselah" (a pattern that lives for a long time) based on the fitness
+    function that measures the maximum size achieved by a LifeGrid during its evolution.
+    """
+
+    def __init__(self, pop_size=50, grid_size=20, min_cells=5, max_cells=10, gen_limit=200,
                  crossover_prob=0.8, mutation_prob=0.8, mutation_count=3, threshold_fit=100):
         """
         Initializes the Genetic Algorithm.
@@ -88,8 +98,8 @@ class GeneticAlgorithm:
         random_pattern = set()
 
         while len(random_pattern) < num_cells:
-            row = random.randint(0, self.grid_size)
-            col = random.randint(0, self.grid_size)
+            row = random.randint(0, self.grid_size - 1)
+            col = random.randint(0, self.grid_size - 1)
             random_pattern.add((row, col))  # Add unique (row, col) coordinates
 
         return LifeGrid(random_pattern, self.grid_size)
@@ -152,7 +162,7 @@ class GeneticAlgorithm:
 
     def crossover(self, parent1: LifeGrid, parent2: LifeGrid):
         """
-        Perform uniform crossover between two parent individuals to create two offspring.
+        Perform position-based crossover to create offspring.
 
         Args:
             parent1 (LifeGrid): The first parent individual.
@@ -161,31 +171,40 @@ class GeneticAlgorithm:
         Returns:
             tuple: Two LifeGrid objects representing the offspring.
         """
-        # Check if crossover should occur based on the specified probability
         if random.random() > self.crossover_prob:
             return parent1, parent2
 
-        # Initialize patterns for the offspring
-        child1_pattern = set()
-        child2_pattern = set()
+        # Generate offspring positions
+        child1_positions = self._crossover_positions(parent1.pattern, parent2.pattern)
+        child2_positions = self._crossover_positions(parent2.pattern, parent1.pattern)
 
-        # Combine all unique positions from both parents
-        all_positions = parent1.pattern | parent2.pattern
-
-        for position in all_positions:
-            # Randomly assign positions to either child1 or child2
-            if random.random() < 0.5:
-                if len(child1_pattern) < self.max_cells:
-                    child1_pattern.add(position)
-            else:
-                if len(child2_pattern) < self.max_cells:
-                    child2_pattern.add(position)
-
-        # Create new LifeGrid objects for the offspring
-        child1 = LifeGrid(child1_pattern, self.grid_size)
-        child2 = LifeGrid(child2_pattern, self.grid_size)
+        # Create offspring as LifeGrid objects
+        child1 = LifeGrid(child1_positions, self.grid_size)
+        child2 = LifeGrid(child2_positions, self.grid_size)
 
         return child1, child2
+
+    def _crossover_positions(self, primary_pattern: set, secondary_pattern: set):
+        """
+        Generate a set of positions for an offspring using a two-step sampling process.
+
+        Args:
+            primary_pattern (set): The pattern from the primary parent.
+            secondary_pattern (set): The pattern from the secondary parent.
+
+        Returns:
+            set: A set of positions for the offspring.
+        """
+        # Sample half of the max cells from the primary pattern
+        max_primary_sample = min(len(primary_pattern), self.max_cells // 2)
+        offspring_positions = set(random.sample(list(primary_pattern), max_primary_sample))
+
+        # Fill remaining positions from the secondary pattern
+        max_secondary_sample = min(len(secondary_pattern - offspring_positions),
+                                   self.max_cells - len(offspring_positions))
+        offspring_positions.update(random.sample(list(secondary_pattern - offspring_positions), max_secondary_sample))
+
+        return offspring_positions
 
     def mutation(self, individual):
         """
@@ -272,7 +291,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=100, grid_size=20, gen_limit=500, threshold_fit=110)
+    ga = GeneticAlgorithm(pop_size=50, grid_size=20, gen_limit=500, threshold_fit=100)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
