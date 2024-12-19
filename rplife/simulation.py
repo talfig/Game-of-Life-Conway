@@ -42,6 +42,10 @@ class Simulation:
             self.life.evolve()  # Evolve the pattern for the next generation
             self.update_size()  # Update the current size of the pattern
 
+        if self.gen > self.gen_limit and not self.stabilized():
+            self.max_size = 0
+            self.max_size_gen = self.gen_limit
+
     def stabilized(self):
         """
         Checks if the pattern has stabilized, i.e., if it has appeared before in the simulation history.
