@@ -98,8 +98,8 @@ class GeneticAlgorithm:
         random_pattern = set()
 
         while len(random_pattern) < num_cells:
-            row = random.randint(0, self.grid_size - 1)
-            col = random.randint(0, self.grid_size - 1)
+            row = random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1)
+            col = random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1)
             random_pattern.add((row, col))  # Add unique (row, col) coordinates
 
         return LifeGrid(random_pattern, self.grid_size)
@@ -225,7 +225,7 @@ class GeneticAlgorithm:
                 if random.random() < 0.5 and new_pattern:  # Remove an existing cell
                     new_pattern.remove(random.choice(list(new_pattern)))
                 else:  # Add a new cell within grid bounds
-                    new_cell = (random.randint(0, self.grid_size - 1), random.randint(0, self.grid_size - 1))
+                    new_cell = (random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1), random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1))
                     if len(new_pattern) < self.max_cells:
                         new_pattern.add(new_cell)
 

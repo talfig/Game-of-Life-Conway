@@ -29,7 +29,7 @@ def run_simulation(pattern_name, grid_size=20, cell_size=20, refresh_rate=50):
 
 if __name__ == "__main__":
     # List of patterns to simulate
-    patterns = ["9:131", "8:118", "10:122", "10:126", "7:105"]
+    patterns = ["9:131", "8:118", "10:124", "10:126", "7:105"]
 
     # Sequentially run each simulation
     for pattern in patterns:
