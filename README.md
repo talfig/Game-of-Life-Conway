@@ -1,4 +1,4 @@
-# Game-of-Life Simulation with Genetic Algorithm
+# Game of Life Simulation with Genetic Algorithm
 
 This project simulates the "Game of Life" using a grid, and employs a genetic algorithm to evolve grid patterns. The goal is to evolve a grid pattern that can develop into a "Methuselah" (a pattern that lives for many generations before reaching a stable state) by using evolutionary techniques like selection, crossover, and mutation.
 
