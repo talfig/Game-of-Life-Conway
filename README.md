@@ -49,10 +49,10 @@ To run the genetic algorithm and find a Methuselah pattern, you can execute the 
 python rplife/genetic_algorithm.py
 ```
 
-To run the GUI simulation:
+To run the demo:
 
 ```bash
-python rplife/gui_simulation.py
+python demo.py
 ```
 
 ## License
