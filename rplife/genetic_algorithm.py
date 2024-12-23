@@ -98,8 +98,8 @@ class GeneticAlgorithm:
         random_pattern = set()
 
         while len(random_pattern) < num_cells:
-            row = random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1)
-            col = random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1)
+            row = random.randint(self.grid_size // 4, self.grid_size // 4 + self.max_cells // 2)
+            col = random.randint(self.grid_size // 4, self.grid_size // 4 + self.max_cells // 2)
             random_pattern.add((row, col))  # Add unique (row, col) coordinates
 
         return LifeGrid(random_pattern, self.grid_size)
@@ -225,7 +225,8 @@ class GeneticAlgorithm:
                 if random.random() < 0.5 and new_pattern:  # Remove an existing cell
                     new_pattern.remove(random.choice(list(new_pattern)))
                 else:  # Add a new cell within grid bounds
-                    new_cell = (random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1), random.randint(self.grid_size // 4, 3 * self.grid_size // 4 - 1))
+                    new_cell = (random.randint(self.grid_size // 4, self.grid_size // 4 + self.max_cells // 2),
+                                random.randint(self.grid_size // 4, self.grid_size // 4 + self.max_cells // 2))
                     if len(new_pattern) < self.max_cells:
                         new_pattern.add(new_cell)
 
@@ -291,7 +292,7 @@ class GeneticAlgorithm:
 
 if __name__ == "__main__":
     # Initialize the Genetic Algorithm
-    ga = GeneticAlgorithm(pop_size=100, grid_size=20, gen_limit=500, threshold_fit=100)
+    ga = GeneticAlgorithm(pop_size=100, grid_size=20, gen_limit=500, threshold_fit=130)
 
     # Find Methuselah
     methuselah = ga.find_methuselah()
